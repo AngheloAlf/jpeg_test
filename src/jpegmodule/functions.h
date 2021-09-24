@@ -5,7 +5,7 @@
 
 void osSyncPrintf(const char* fmt, ...);
 
-void __assert(const char* exp, const char* file, s32 line);
+void __custom_assert(const char* exp, const char* file, s32 line);
 
 s32 osSendMesg(OSMesgQueue* mq, OSMesg msg, s32 flags);
 s32 osRecvMesg(OSMesgQueue* mq, OSMesg* msg, s32 flags);

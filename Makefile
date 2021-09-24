@@ -5,7 +5,7 @@ ELF			:= jpeg_test.elf
 
 CC 			:= clang
 IINC		:= -I src
-WARNINGS	:= -Wall -Wextra -Wshadow -Wno-unused-variable -Werror=implicit-function-declaration
+WARNINGS	:= -Wall -Wextra -Wshadow -Wno-unused-variable -Werror=implicit-function-declaration -Wno-unused-parameter
 CFLAGS		:= -funsigned-char
 ifeq ($(DEBUG),0)
   OPTFLAGS	:= -O2
