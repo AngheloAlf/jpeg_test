@@ -93,6 +93,7 @@ void Jpeg_CopyToZbuffer(u16* src, u16* zbuffer, s32 x, s32 y) {
  * unaligned values in JPEG header files.
  */
 u16 Jpeg_GetUnalignedU16(u8* ptr) {
+#if __BYTE_ORDER == __BIG_ENDIAN
     if (((uintptr_t)ptr & 1) == 0) {
         // Read the value normally if it's aligned to a 16-bit address.
         return *(u16*)ptr;
@@ -100,6 +101,11 @@ u16 Jpeg_GetUnalignedU16(u8* ptr) {
         // Read unaligned values using two separate aligned memory accesses when it's not.
         return *(u16*)(ptr - 1) << 8 | (*(u16*)(ptr + 1) >> 8);
     }
+#elif __BYTE_ORDER == __LITTLE_ENDIAN
+    return ((ptr[0]) << 8) | ((ptr[1]));
+#else
+#error "Unexpected endian"
+#endif
 }
 
 /**
@@ -108,6 +114,9 @@ u16 Jpeg_GetUnalignedU16(u8* ptr) {
  */
 void Jpeg_ParseMarkers(u8* ptr, JpegContext* ctx) {
     u32 exit = false;
+    #ifdef CUSTOM_CODE
+    u8* start = ptr;
+    #endif
 
     ctx->dqtCount = 0;
     ctx->dhtCount = 0;
@@ -119,6 +128,9 @@ void Jpeg_ParseMarkers(u8* ptr, JpegContext* ctx) {
 
         // 0xFF indicates the start of a JPEG marker, so look for the next.
         if (*ptr++ == 0xFF) {
+        #ifdef CUSTOM_CODE
+            //osSyncPrintf("ptr %06p: %02X\n", ptr-start, *ptr);
+        #endif
             switch (*ptr++) {
                 case MARKER_ESCAPE: {
                     // Compressed value 0xFF is stored as 0xFF00 to escape it, so ignore it.
