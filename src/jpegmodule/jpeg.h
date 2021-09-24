@@ -4,7 +4,15 @@
 #include "ultra64/types.h"
 #include "z64.h"
 
+#include "endian.h"
+
+#if __BYTE_ORDER == __BIG_ENDIAN
 #define JPEG_MARKER 0xFFD8FFE0
+#elif __BYTE_ORDER == __LITTLE_ENDIAN
+#define JPEG_MARKER 0xE0FFD8FF
+#else
+#error "Unexpected endian"
+#endif
 
 #define MARKER_ESCAPE 0x00
 #define MARKER_SOI 0xD8

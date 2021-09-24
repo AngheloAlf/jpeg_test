@@ -1,5 +1,7 @@
-#ifndef OS_H
-#define OS_H
+#ifndef Z64_H
+#define Z64_H
+
+#define CUSTOM_CODE 1
 
 #include <stdint.h>
 #include <stdlib.h>

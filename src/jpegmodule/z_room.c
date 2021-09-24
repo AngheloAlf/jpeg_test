@@ -27,6 +27,12 @@ s32 func_80096238(void* data) {
             osSyncPrintf("失敗！なんで〜\n"); // "Failure! Why is it 〜"
         }
     }
+#ifdef CUSTOM_CODE
+    else {
+        osSyncPrintf("Wrong JPEG_MARKER: %X\n", *(u32*)data);
+        return 1;
+    }
+#endif
 
     return 0;
 }
