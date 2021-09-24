@@ -15,12 +15,13 @@ endif
 
 SRC_DIRS 	:= $(shell find src -type d)
 C_FILES		:= $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+H_FILES		:= $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.h))
 O_FILES		:= $(foreach f,$(C_FILES:.c=.o),build/$f)
 
 all: $(ELF)
 
 clean:
-	$(RM) -r $(O_FILES)
+	$(RM) -r $(O_FILES) $(ELF)
 
 .PHONY: all clean
 
@@ -30,5 +31,5 @@ $(shell mkdir -p $(foreach dir,$(SRC_DIRS),build/$(dir)))
 $(ELF): $(O_FILES)
 	$(CC) $(IINC) $(WARNINGS) $(CFLAGS) $(OPTFLAGS) -o $@ $^
 
-build/src/%.o: src/%.c
+build/src/%.o: src/%.c $(H_FILES)
 	$(CC) -c $(IINC) $(WARNINGS) $(CFLAGS) $(OPTFLAGS) -o $@ $<

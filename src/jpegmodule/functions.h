@@ -3,6 +3,9 @@
 
 #include "z64.h"
 
+void _custom_bzero(void* __s, u32 __n);
+void* _custom_bcopy(void* __src, void* __dest, u32 __n);
+
 void osSyncPrintf(const char* fmt, ...);
 
 void __custom_assert(const char* exp, const char* file, s32 line);

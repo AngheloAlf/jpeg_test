@@ -4,6 +4,8 @@
 #include "ultra64/types.h"
 #include "z64.h"
 
+#define JPEG_MARKER 0xFFD8FFE0
+
 #define MARKER_ESCAPE 0x00
 #define MARKER_SOI 0xD8
 #define MARKER_SOF 0xC0
@@ -45,6 +47,7 @@ typedef struct {
     /* 0x14 */ void* qTableVPtr;
     /* 0x18 */ char unk_18[0x8];
 } JpegTaskData; // size = 0x20
+
 
 typedef struct {
     /* 0x000 */ JpegTaskData taskData;
