@@ -245,6 +245,7 @@ void Jpeg_ParseMarkers(u8* ptr, JpegContext* ctx) {
                 default: {
                 #ifdef CUSTOM_CODE
                     osSyncPrintf("Unknown marker %02x\n", ptr[-1]); // "Unknown marker"
+                    ASSERT(ptr[-1] == 0xC2, "Unknown marker", __FILE__, __LINE__);
                 #else
                     osSyncPrintf("マーカー不明 %02x\n", ptr[-1]); // "Unknown marker"
                 #endif
@@ -354,6 +355,9 @@ s32 Jpeg_Decode(void* data, void* zbuffer, void* work, u32 workSize) {
             }
             break;
         default:
+        #ifdef CUSTOM_CODE
+            osSyncPrintf(VT_FGCOL(RED) "Invalid dhtCount: %i\n" VT_RST, ctx.dhtCount);
+        #endif
             return -1;
     }
 
