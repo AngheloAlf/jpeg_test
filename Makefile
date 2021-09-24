@@ -1,5 +1,5 @@
 DEBUG		?= 0
-
+ASAN		?= 0
 
 ELF			:= jpeg_test.elf
 
@@ -11,6 +11,10 @@ ifeq ($(DEBUG),0)
   OPTFLAGS	:= -O2
 else
   OPTFLAGS	:= -O0 -g3
+endif
+
+ifneq ($(ASAN), 0)
+  CFLAGS	+= -fsanitize=address
 endif
 
 SRC_DIRS 	:= $(shell find src -type d)

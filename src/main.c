@@ -15,7 +15,9 @@ char* readJpegBuff(const char* jpegPath) {
     fileSize = ftell(jpegFile);
     fseek(jpegFile, 0L, SEEK_SET);
 
-    char* jpegBuffer = malloc(fileSize * sizeof(char));
+    char* jpegBuffer;
+    //jpegBuffer = malloc(fileSize * sizeof(char));
+    jpegBuffer = malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(u16));
 
     fread(jpegBuffer, fileSize, 1, jpegFile);
 
@@ -28,7 +30,7 @@ char* readJpegBuff(const char* jpegPath) {
 int main(int argc, char** argv) {
     //printf("%i", argc);
     if (argc < 2) {
-        printf("Usage: %s <path/to/jpegfile>\n", argv[0]);
+        printf("Usage: %s path/to/jpegfile [outpath]\n", argv[0]);
         return 1;
     }
 
@@ -36,6 +38,14 @@ int main(int argc, char** argv) {
     char* jpegBuffer = readJpegBuff(jpegPath);
 
     s32 status = func_80096238(jpegBuffer);
+
+    if (argc >= 3) {
+        FILE* outfile = fopen(argv[2], "wb");
+
+        fwrite(jpegBuffer, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(u16), 1, outfile);
+
+        fclose(outfile);
+    }
 
     free(jpegBuffer);
 

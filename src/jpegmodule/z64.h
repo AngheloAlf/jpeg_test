@@ -1,11 +1,6 @@
 #ifndef Z64_H
 #define Z64_H
 
-#define CUSTOM_CODE 1
-
-#include <stdint.h>
-#include <stdlib.h>
-
 #include "ultra64/types.h"
 #include "ultra64/thread.h"
 #include "ultra64/convert.h"
