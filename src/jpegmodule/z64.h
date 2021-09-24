@@ -9,6 +9,7 @@
 #include "ultra64/sptask.h"
 #include "ultra64/vi.h"
 #include "macros.h"
+#include "sched.h"
 
 #define NULL ((void*)0)
 #define true 1

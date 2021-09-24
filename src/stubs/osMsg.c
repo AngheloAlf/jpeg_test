@@ -2,8 +2,46 @@
 #include "jpegmodule/functions.h"
 #include "jpegmodule/variables.h"
 
+static void process_jpeg(OSTask_t* jpegTask) {
+    //jpegTask.
+
+}
+
+
 s32 osSendMesg(OSMesgQueue* mq, OSMesg msg, s32 flags) {
     // stub
+
+#ifdef CUSTOM_CODE
+
+    if (msg == RSP_DONE_MSG) {
+        return 0;
+    } else if (msg == RDP_DONE_MSG) {
+        return 0;
+    } else if (msg == ENTRY_MSG) {
+        return 0;
+    }
+
+    //osSyncPrintf("%p\n", msg);
+    OSScTask* scTask = msg;
+    // if (scTask->list.t.type == M_NJPEGTASK) {
+    //     
+    // } else {
+    //     
+    // }
+    switch (scTask->list.t.type) {
+        case M_NJPEGTASK:
+            osSyncPrintf("osSendMesg: M_NJPEGTASK\n");
+            process_jpeg(&scTask->list.t);
+            break;
+
+        default:
+            osSyncPrintf("osSendMesg: Dunno %i\n", scTask->list.t.type);
+            break;
+    }
+
+
+#endif
+
     return 0;
 }
 
